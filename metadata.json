@@ -1,0 +1,8 @@
+{
+  "name": "Aplicativo BiruFind",
+  "description": "Um diário visual interativo para casais organizarem e registrarem suas experiências em restaurantes, bares, praias e viagens.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}
