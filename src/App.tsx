@@ -16,7 +16,7 @@ import { PlaceForm } from './components/PlaceForm';
 import { usePlaces } from './hooks/usePlaces';
 import { Category, CATEGORIES, Place } from './types';
 import { normalizeCategory } from './utils/categories';
-import { Plus, Map as MapIcon, List as ListIcon, Filter, ChevronDown, ArrowLeft, Beer, Utensils, Compass, Umbrella, Bed, LayoutGrid } from 'lucide-react';
+import { Plus, Map as MapIcon, List as ListIcon, Filter, ChevronDown, ArrowLeft, Beer, Utensils, Compass, Umbrella, Bed, LayoutGrid, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const iconMap: Record<string, any> = {
@@ -29,7 +29,7 @@ const iconMap: Record<string, any> = {
 };
 
 export default function App() {
-  const { places, addPlace, updatePlace, deletePlace } = usePlaces();
+  const { places, addPlace, updatePlace, deletePlace, error: dbError } = usePlaces();
   const [welcomeSelected, setWelcomeSelected] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('Tudo');
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -135,6 +135,20 @@ export default function App() {
 
   return (
     <div className="flex h-screen flex-col md:flex-row bg-[#F8F9FA]">
+      {/* Error Message Toast */}
+      <AnimatePresence>
+        {dbError && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] px-4 py-2 bg-rose-600 text-white rounded-full shadow-lg text-[10px] font-bold flex items-center gap-2 uppercase tracking-wider"
+          >
+            <AlertCircle className="w-4 h-4" />
+            {dbError}
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Sidebar - Desktop */}
       <div className="hidden md:flex flex-col w-[350px] lg:w-[380px] bg-white border-r border-gray-100 z-30 shadow-sm relative">
         <div className="p-4 px-6 border-b border-gray-50 bg-gray-50/10">
